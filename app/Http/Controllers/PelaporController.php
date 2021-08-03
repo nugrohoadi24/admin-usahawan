@@ -14,7 +14,7 @@ class PelaporController extends Controller
      */
     public function index()
     {
-        $items = Laporan::all();
+        $items = Laporan::orderBy('id', 'DESC')->get();
         return view('pages.pelapor.index')->with([
             'items' => $items
         ]);
@@ -105,5 +105,19 @@ class PelaporController extends Controller
         return view('pages.pelapor.verification')->with([
             'items' => $items
         ]);
+    }
+
+    public function setStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:PROSES,DITERIMA,DITOLAK'
+        ]);
+        
+        $laporan = Laporan::findOrFail($id);
+        $laporan->status = $request->status;
+
+        $laporan->save();
+
+        return redirect()->route('laporan.index');
     }
 }

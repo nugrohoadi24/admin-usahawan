@@ -26,3 +26,8 @@ Route::get('laporan/{id}/details', 'App\Http\Controllers\PelaporController@detai
     ->name('laporan.detail');
 Route::get('permohonan/{id}/details', 'App\Http\Controllers\PemohonController@detail')
     ->name('permohonan.detail');
+
+Route::get('laporan/{id}/set-status', 'App\Http\Controllers\PelaporController@setStatus')
+    ->name('laporan.status');
+Route::get('permohonan/{id}/set-status', 'App\Http\Controllers\PemohonController@setStatus')
+    ->name('permohonan.status');

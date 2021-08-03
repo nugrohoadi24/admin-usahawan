@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="menu-title">Permohonan</li>
-                <li class="">laporan_items
+                <li class="">
                     <a href="{{ route('permohonan.index') }}"> <i class="menu-icon fa fa-list"></i>Data Permohonan</a>
                 </li>
                 <li class="">

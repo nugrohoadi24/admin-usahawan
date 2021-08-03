@@ -97,4 +97,18 @@ class PemohonController extends Controller
             'permohonan' => $permohonan,
         ]);
     }
+
+    public function setStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:PROSES,DITERIMA,DITOLAK'
+        ]);
+        
+        $permohonan = Permohonan::findOrFail($id);
+        $permohonan->status = $request->status;
+
+        $permohonan->save();
+
+        return redirect()->route('permohonan.index');
+    }
 }

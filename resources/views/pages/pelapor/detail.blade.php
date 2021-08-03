@@ -131,6 +131,26 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <a href="{{ route('laporan.status', $laporan->id) }}?status=DITERIMA"
+                        class="btn btn-success btn-block">
+                        <i class="fa fa-check"></i>Set Diterima
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="{{ route('laporan.status', $laporan->id) }}?status=DITOLAK"
+                        class="btn btn-danger btn-block">
+                        <i class="fa fa-times"></i>Set Ditolak
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="{{ route('laporan.status', $laporan->id) }}?status=PROSES"
+                        class="btn btn-warning btn-block">
+                        <i class="fa fa-spinner"></i>Set Proses
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

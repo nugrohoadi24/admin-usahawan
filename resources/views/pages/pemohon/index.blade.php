@@ -18,6 +18,7 @@
                                         <th>Tanggal Laporan</th>
                                         <th>Nama Termohon</th>
                                         <th>Kepentingan</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -32,6 +33,19 @@
                                         <td>{{ $item->created_at }}</td>
                                         <td>{{ $item->nama_termohon }}</td>
                                         <td>{{ $item->kepentingan }}</td>
+                                        <td>
+                                            @if($item->status == 'PROSES')
+                                              <span class="badge bg-warning text-dark">
+                                            @elseif($item->status == 'DITERIMA')
+                                              <span class="badge bg-success">
+                                            @elseif($item->status == 'DITOLAK')
+                                              <span class="badge bg-danger">
+                                            @else
+                                              <span>
+                                            @endif
+                                              {{ $item->status }}
+                                            </span>
+                                        </td>
                                         <td>
                                             <a href="{{ route('permohonan.detail', $item->id) }}" class="btn btn-success btn-sm">
                                                 <i class="fa fa-eye"></i>
