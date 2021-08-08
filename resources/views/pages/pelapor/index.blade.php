@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body--">
                         <div class="table-stats order-table ov-h">
-                            <table class="table" id="myTable">
+                            <table class="table" id="dataTables">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -64,7 +64,7 @@
                                     </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6" class="text-center p-5">Data Tidak Tersedia</td>
+                                            <td colspan="6" class="text-center p-5">Data Tidak Tersedia, Silahkan Verifikasi Terlebih Dahulu!</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -75,4 +75,15 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+
+<script>
+
+    jQuery(document).ready(function() {
+    jQuery('#dataTables').DataTable();
+} );
+</script>
+
 @endsection

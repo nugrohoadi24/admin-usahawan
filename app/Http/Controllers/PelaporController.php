@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
+use finfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class PelaporController extends Controller
 {
@@ -14,7 +18,12 @@ class PelaporController extends Controller
      */
     public function index()
     {
-        $items = Laporan::orderBy('id', 'DESC')->get();
+        $items = Laporan::select('*')
+            ->where('status', 'DITERIMA')
+            ->orWhere('status', 'DITOLAK')
+            ->orderBy('id', 'DESC')
+            ->get();
+
         return view('pages.pelapor.index')->with([
             'items' => $items
         ]);
@@ -94,14 +103,36 @@ class PelaporController extends Controller
     {
         $laporan = Laporan::findorFail($id);
 
+        $primary_document = pathinfo($laporan->primary_document, PATHINFO_EXTENSION);
+        $secondary_document = pathinfo($laporan->secondary_document, PATHINFO_EXTENSION);
+
         return view('pages.pelapor.detail')->with([
             'laporan' => $laporan,
+            'primary_document' => $primary_document,
+            'secondary_document' => $secondary_document
         ]);
+    }
+
+    public function download_primary($id)
+    {
+        $laporan = Laporan::findorFail($id);
+        $primary_document = pathinfo($laporan->primary_document, PATHINFO_BASENAME);
+
+        return response()->download(public_path('storage/assets/primary_document/'.$primary_document));
+    }
+
+    public function download_secondary($id)
+    {
+        $laporan = Laporan::findorFail($id);
+        $secondary_document = pathinfo($laporan->secondary_document, PATHINFO_BASENAME);
+
+        return response()->download(public_path('storage/assets/secondary_document/'.$secondary_document));
     }
 
     public function verifikasi(Request $request)
     {
-        $items = Laporan::all();
+        $items = Laporan::where('status', 'PROSES')->get();
+
         return view('pages.pelapor.verification')->with([
             'items' => $items
         ]);
@@ -119,5 +150,19 @@ class PelaporController extends Controller
         $laporan->save();
 
         return redirect()->route('laporan.index');
+    }
+
+    public function sendEmail()
+    {
+        // $items = Laporan::findOrFail($id);
+        // dd(config('mail'));
+        $details = [
+            'title' => 'Mail from nugrohoadi.pratomo99@gmail.com',
+            'body' => 'This is for testing email using smtp'
+        ];
+       
+        Mail::to('nugrohoadi.pratomo24@gmail.com')->send(new \App\Mail\MyTestMail($details));
+       
+        dd("Email is Sent.");
     }
 }

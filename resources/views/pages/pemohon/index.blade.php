@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body--">
                         <div class="table-stats order-table ov-h">
-                            <table class="table" id="myTable">
+                            <table class="table" id="dataTables">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -72,4 +72,15 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+
+<script>
+
+    jQuery(document).ready(function() {
+    jQuery('#dataTables').DataTable();
+} );
+</script>
+
 @endsection

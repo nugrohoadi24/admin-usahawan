@@ -6,7 +6,13 @@
         <div class="col-md-4">
             <div class="card card-default">
                 <div class="card-body text-center">
-                    <img class="center-block img-responsive rounded-circle img-thumbnail thumb96" src="{{ url($laporan->foto_pelapor) }}" alt="">
+                    <div class="frame-main">
+                        <img class="center-block img-responsive rounded-circle img-thumbnail" src="{{ $laporan->foto_pelapor }}" alt="foto_pribadi" id="myFoto">
+                        <div id="show_foto" class="show_foto">
+                            <img class="modal-content" id="imgFoto">
+                            <h4 id="caption" class="close_foto">Kembali</h4>
+                        </div>
+                    </div>
                     <h3 class="mt-3">{{ $laporan->nama_pelapor }}</h3>
                     <div class="py-2">
                         <p>{{ $laporan->kasus }}</p>
@@ -16,19 +22,84 @@
             <div class="card card-default hidden-xs hidden-sm">
                 <div class="card-body text-center">
                     <h4 class="py-3">KTP Pelapor</h4>
-                    <img class="center-block img-responsive rounded-circle img-thumbnail thumb96" src="{{ url($laporan->ktp_pelapor) }}" alt="">
+                    <img class="center-block img-responsive img-thumbnail frame-photo" src="{{ $laporan->ktp_pelapor }}" alt="foto_ktp" id="myKtp">
+                    <div id="show_ktp" class="show_ktp">
+                        <img class="modal-content" id="imgKtp">
+                        <h4 id="caption" class="close_ktp">Kembali</h4>
+                    </div>
                 </div>
             </div>
             <div class="card card-default hidden-xs hidden-sm">
                 <div class="card-body text-center">
                     <h4 class="py-3">Dokumen Utama</h4>
-                    <img class="center-block img-responsive rounded-circle img-thumbnail thumb96" src="{{ url($laporan->ktp_pelapor) }}" alt="">
+                    @if($primary_document == 'pdf')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/pdf.png') }}" alt="">
+                    @elseif($primary_document == 'doc' || $primary_document == 'docx')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/doc.png') }}" alt="">
+                    @elseif($primary_document == 'xlx' || $primary_document == 'xlsx')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/excel.png') }}" alt="">
+                    @elseif($primary_document == 'ppt' || $primary_document == 'pptx')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/ppt.png') }}" alt="">
+                    @elseif($primary_document == 'mp4' || $primary_document == 'mkv')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/mp4.png') }}" alt="">
+                    @elseif($primary_document == 'mp3' || $primary_document == 'wav')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/mp3.png') }}" alt="">
+                    @elseif($primary_document == 'zip' || $primary_document == 'rar')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/zip.png') }}" alt="">
+                    @endif
+                    <a href="{{ route('laporan.download_primary', $laporan->id) }}">
+                        <button type="button" class="btn btn-primary mt-3">Download File</button>
+                    </a>
                 </div>
             </div>
             <div class="card card-default hidden-xs hidden-sm">
                 <div class="card-body text-center">
                     <h4 class="py-3">Dokumen Pendukung</h4>
-                    <img class="center-block img-responsive rounded-circle img-thumbnail thumb96" src="{{ url($laporan->ktp_pelapor) }}" alt="">
+                    @if($secondary_document == 'pdf')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/pdf.png') }}" alt="">
+                    @elseif($secondary_document == 'doc' || $secondary_document == 'docx')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/doc.png') }}" alt="">
+                    @elseif($secondary_document == 'xlx' || $secondary_document == 'xlsx')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/excel.png') }}" alt="">
+                    @elseif($secondary_document == 'ppt' || $secondary_document == 'pptx')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/ppt.png') }}" alt="">
+                    @elseif($secondary_document == 'mp4' || $secondary_document == 'mkv')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/mp4.png') }}" alt="">
+                    @elseif($secondary_document == 'mp3' || $secondary_document == 'wav')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/mp3.png') }}" alt="">
+                    @elseif($secondary_document == 'zip' || $secondary_document == 'rar')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/zip.png') }}" alt="">
+                    @elseif($secondary_document == 'jpg')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/jpg.png') }}" alt="">
+                    @else
+                        Data Tidak Ada
+                    @endif
+                    <a href="{{ route('laporan.download_secondary', $laporan->id) }}">
+                        <button type="button" class="btn btn-primary mt-3">Download File</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card card-default hidden-xs hidden-sm">
+                <div class="card-body text-center">
+                    <h4 class="py-3">Verifikasi Status</h4>
+                    <div class="">
+                        <a href="{{ route('laporan.status', $laporan->id) }}?status=DITERIMA"
+                            class="btn btn-success btn-block">
+                            <i class="fa fa-check"></i>Set Diterima
+                        </a>
+                    </div>
+                    <div class="m-2">
+                        <a href="{{ route('laporan.status', $laporan->id) }}?status=DITOLAK"
+                            class="btn btn-danger btn-block">
+                            <i class="fa fa-times"></i>Set Ditolak
+                        </a>
+                    </div>
+                    <div class="m-2">
+                        <a href="{{ route('laporan.status', $laporan->id) }}?status=PROSES"
+                            class="btn btn-warning btn-block">
+                            <i class="fa fa-spinner"></i>Set Proses
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,7 +129,7 @@
                             </div>
                             <label class="col-lg-12 control-label mt-2 py-1">Email</label>
                             <div class="col-lg-12">
-                                <label class="form-control">{{ $laporan->email_pelapor }}</label>
+                                dataTables  <label class="form-control">{{ $laporan->email_pelapor }}</label>
                             </div>
                             <label class="col-lg-12 control-label mt-2 py-1">Alamat</label>
                             <div class="col-lg-12">
@@ -131,27 +202,41 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-4">
-                    <a href="{{ route('laporan.status', $laporan->id) }}?status=DITERIMA"
-                        class="btn btn-success btn-block">
-                        <i class="fa fa-check"></i>Set Diterima
-                    </a>
-                </div>
-                <div class="col-4">
-                    <a href="{{ route('laporan.status', $laporan->id) }}?status=DITOLAK"
-                        class="btn btn-danger btn-block">
-                        <i class="fa fa-times"></i>Set Ditolak
-                    </a>
-                </div>
-                <div class="col-4">
-                    <a href="{{ route('laporan.status', $laporan->id) }}?status=PROSES"
-                        class="btn btn-warning btn-block">
-                        <i class="fa fa-spinner"></i>Set Proses
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 @endsection
+
+@section('script')
+<script>
+    var foto = document.getElementById("show_foto");
+    var ktp = document.getElementById("show_ktp");
+
+    var img_foto = document.getElementById("myFoto");
+    var img_ktp = document.getElementById("myKtp");
+
+    var modalFoto = document.getElementById("imgFoto");
+    var modalKtp = document.getElementById("imgKtp");
+
+    img_foto.onclick = function(){
+      foto.style.display = "block";
+      modalFoto.src = this.src;
+    }
+
+    img_ktp.onclick = function(){
+      ktp.style.display = "block";
+      modalKtp.src = this.src;
+    }
+
+    var close_foto = document.getElementsByClassName("close_foto")[0];
+    var close_ktp = document.getElementsByClassName("close_ktp")[0];
+    
+    close_foto.onclick = function() { 
+      foto.style.display = "none";
+    }
+
+    close_ktp.onclick = function() { 
+      ktp.style.display = "none";
+    }
+    </script>
+    @endsection

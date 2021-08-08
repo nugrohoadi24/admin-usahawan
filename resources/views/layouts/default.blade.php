@@ -37,5 +37,6 @@
     @stack('before-style')
     @include('includes.script')
     @stack('after-style')
+    @yield('script')
 </body>
 </html>

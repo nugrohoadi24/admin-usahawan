@@ -6,7 +6,13 @@
         <div class="col-md-4">
             <div class="card card-default">
                 <div class="card-body text-center">
-                    <img class="center-block img-responsive rounded-circle img-thumbnail thumb96" src="{{ url($permohonan->foto_pemohon) }}" alt="">
+                    <div class="frame-main">
+                        <img class="center-block img-responsive rounded-circle img-thumbnail" src="{{ url($permohonan->foto_pemohon) }}" alt="foto_pribadi" id="myFoto">
+                        <div id="show_foto" class="show_foto">
+                            <img class="modal-content" id="imgFoto">
+                            <h4 id="caption" class="close_foto">Kembali</h4>
+                        </div>
+                    </div>
                     <h3 class="mt-3">{{ $permohonan->nama_pemohon }}</h3>
                     <div class="py-2">
                         <p>{{ $permohonan->kepentingan }}</p>
@@ -16,9 +22,37 @@
             <div class="card card-default hidden-xs hidden-sm">
                 <div class="card-body text-center">
                     <h4 class="py-3">KTP Pelapor</h4>
-                    <img class="center-block img-responsive rounded-circle img-thumbnail thumb96" src="{{ url($permohonan->ktp_pemohon) }}" alt="">
+                    <img class="center-block img-responsive img-thumbnail frame-photo" src="{{ url($permohonan->ktp_pemohon) }}" alt="foto_ktp" id="myKtp">
+                    <div id="show_ktp" class="show_ktp">
+                        <img class="modal-content" id="imgKtp">
+                        <h4 id="caption" class="close_ktp">Kembali</h4>
+                    </div>
                 </div>
             </div>
+            <div class="card card-default hidden-xs hidden-sm">
+                <div class="card-body text-center">
+                    <h4 class="py-3">Verifikasi Status</h4>
+                    <div class="">
+                        <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITERIMA"
+                            class="btn btn-success btn-block">
+                            <i class="fa fa-check"></i>Set Diterima
+                        </a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITOLAK"
+                            class="btn btn-danger btn-block">
+                            <i class="fa fa-times"></i>Set Ditolak
+                        </a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ route('permohonan.status', $permohonan->id) }}?status=PROSES"
+                            class="btn btn-warning btn-block">
+                            <i class="fa fa-spinner"></i>Set Proses
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="col-md-8">
             <div class="card card-default">
@@ -95,27 +129,41 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-4">
-                    <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITERIMA"
-                        class="btn btn-success btn-block">
-                        <i class="fa fa-check"></i>Set Diterima
-                    </a>
-                </div>
-                <div class="col-4">
-                    <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITOLAK"
-                        class="btn btn-danger btn-block">
-                        <i class="fa fa-times"></i>Set Ditolak
-                    </a>
-                </div>
-                <div class="col-4">
-                    <a href="{{ route('permohonan.status', $permohonan->id) }}?status=PROSES"
-                        class="btn btn-warning btn-block">
-                        <i class="fa fa-spinner"></i>Set Proses
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 @endsection
+
+@section('script')
+<script>
+    var foto = document.getElementById("show_foto");
+    var ktp = document.getElementById("show_ktp");
+
+    var img_foto = document.getElementById("myFoto");
+    var img_ktp = document.getElementById("myKtp");
+
+    var modalFoto = document.getElementById("imgFoto");
+    var modalKtp = document.getElementById("imgKtp");
+
+    img_foto.onclick = function(){
+      foto.style.display = "block";
+      modalFoto.src = this.src;
+    }
+
+    img_ktp.onclick = function(){
+      ktp.style.display = "block";
+      modalKtp.src = this.src;
+    }
+
+    var close_foto = document.getElementsByClassName("close_foto")[0];
+    var close_ktp = document.getElementsByClassName("close_ktp")[0];
+    
+    close_foto.onclick = function() { 
+      foto.style.display = "none";
+    }
+
+    close_ktp.onclick = function() { 
+      ktp.style.display = "none";
+    }
+    </script>
+    @endsection

@@ -14,7 +14,13 @@ class PemohonController extends Controller
      */
     public function index()
     {
-        $items = Permohonan::all();
+        $items = Permohonan::select('*')
+        ->where('status', 'DITERIMA')
+        ->orWhere('status', 'DITOLAK')
+        ->orderBy('id', 'DESC')
+        ->get();
+        
+
         return view('pages.pemohon.index')->with([
             'items' => $items
         ]);
@@ -95,6 +101,15 @@ class PemohonController extends Controller
 
         return view('pages.pemohon.detail')->with([
             'permohonan' => $permohonan,
+        ]);
+    }
+
+    public function verifikasi(Request $request)
+    {
+        $items = Permohonan::where('status', 'PROSES')->get();
+
+        return view('pages.pemohon.verification')->with([
+            'items' => $items
         ]);
     }
 

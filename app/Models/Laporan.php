@@ -47,7 +47,16 @@ class Laporan extends Model
         'tanggal_transaksi' => 'datetime:Y-m-d',
     ];
 
-    public function getPhotoAttribute($value) {
-        return url('storage/'. $value);
+    public function getFotoPelaporAttribute() {
+        return url('storage/'. $this->attributes['foto_pelapor']);
+    }
+    public function getKtpPelaporAttribute() {
+        return url('storage/'. $this->attributes['ktp_pelapor']);
+    }
+    public function getPrimaryDocumentAttribute() {
+        return url('storage/'. $this->attributes['primary_document']);
+    }
+    public function getSecondaryDocumentAttribute() {
+        return url('storage/'. $this->attributes['secondary_document']);
     }
 }
