@@ -29,10 +29,20 @@ class Permohonan extends Model
         'nama_termohon',
         'jenis_kelamin_termohon',
         'no_telp_termohon',
+        'provinsi_termohon',
+        'kota_termohon',
+        'kecamatan_termohon',
+        'kelurahan_termohon',
         'alamat_termohon',
         'kategori',
         'status'
 
     ];
 
+    public function getFotoPemohonAttribute() {
+        return url('storage/'. $this->attributes['foto_pemohon']);
+    }
+    public function getKtpPemohonAttribute() {
+        return url('storage/'. $this->attributes['ktp_pemohon']);
+    }
 }

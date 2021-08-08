@@ -17,6 +17,17 @@
                     <div class="py-2">
                         <p>{{ $laporan->kasus }}</p>
                     </div>
+                    @if($laporan->status == 'PROSES')
+                        <span class="badge bg-warning text-dark">
+                    @elseif($laporan->status == 'DITERIMA')
+                        <span class="badge bg-success">
+                    @elseif($laporan->status == 'DITOLAK')
+                        <span class="badge bg-danger">
+                    @else
+                        <span>
+                    @endif
+                        {{ $laporan->status }}
+                    </span>
                 </div>
             </div>
             <div class="card card-default hidden-xs hidden-sm">
@@ -82,24 +93,48 @@
             <div class="card card-default hidden-xs hidden-sm">
                 <div class="card-body text-center">
                     <h4 class="py-3">Verifikasi Status</h4>
-                    <div class="">
+                    <div class="mt-2">
+                    @if($laporan->status == 'PROSES')
                         <a href="{{ route('laporan.status', $laporan->id) }}?status=DITERIMA"
                             class="btn btn-success btn-block">
                             <i class="fa fa-check"></i>Set Diterima
                         </a>
                     </div>
-                    <div class="m-2">
+                    <div class="mt-2">
                         <a href="{{ route('laporan.status', $laporan->id) }}?status=DITOLAK"
                             class="btn btn-danger btn-block">
                             <i class="fa fa-times"></i>Set Ditolak
                         </a>
                     </div>
-                    <div class="m-2">
+                    @elseif($laporan->status == 'DITOLAK')
+                    <a href="{{ route('laporan.status', $laporan->id) }}?status=DITERIMA"
+                        class="btn btn-success btn-block">
+                        <i class="fa fa-check"></i>Set Diterima
+                    </a>
+                    </div>
+                    <div class="mt-2">
                         <a href="{{ route('laporan.status', $laporan->id) }}?status=PROSES"
                             class="btn btn-warning btn-block">
                             <i class="fa fa-spinner"></i>Set Proses
                         </a>
                     </div>
+                    @elseif($laporan->status == 'DITERIMA')
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ route('laporan.status', $laporan->id) }}?status=DITOLAK"
+                            class="btn btn-danger btn-block">
+                            <i class="fa fa-times"></i>Set Ditolak
+                        </a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ route('laporan.status', $laporan->id) }}?status=PROSES"
+                            class="btn btn-warning btn-block">
+                            <i class="fa fa-spinner"></i>Set Proses
+                        </a>
+                    </div>
+                    @else
+                        Tidak terdeteksi
+                    @endif
                 </div>
             </div>
         </div>
@@ -129,7 +164,7 @@
                             </div>
                             <label class="col-lg-12 control-label mt-2 py-1">Email</label>
                             <div class="col-lg-12">
-                                dataTables  <label class="form-control">{{ $laporan->email_pelapor }}</label>
+                                <label class="form-control">{{ $laporan->email_pelapor }}</label>
                             </div>
                             <label class="col-lg-12 control-label mt-2 py-1">Alamat</label>
                             <div class="col-lg-12">

@@ -17,6 +17,17 @@
                     <div class="py-2">
                         <p>{{ $permohonan->kepentingan }}</p>
                     </div>
+                    @if($permohonan->status == 'PROSES')
+                        <span class="badge bg-warning text-dark">
+                    @elseif($permohonan->status == 'DITERIMA')
+                        <span class="badge bg-success">
+                    @elseif($permohonan->status == 'DITOLAK')
+                        <span class="badge bg-danger">
+                    @else
+                        <span>
+                    @endif
+                        {{ $permohonan->status }}
+                    </span>
                 </div>
             </div>
             <div class="card card-default hidden-xs hidden-sm">
@@ -32,11 +43,32 @@
             <div class="card card-default hidden-xs hidden-sm">
                 <div class="card-body text-center">
                     <h4 class="py-3">Verifikasi Status</h4>
-                    <div class="">
+                    <div class="mt-2">
+                    @if($permohonan->status == 'PROSES')
                         <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITERIMA"
                             class="btn btn-success btn-block">
                             <i class="fa fa-check"></i>Set Diterima
                         </a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITOLAK"
+                            class="btn btn-danger btn-block">
+                            <i class="fa fa-times"></i>Set Ditolak
+                        </a>
+                    </div>
+                    @elseif($permohonan->status == 'DITOLAK')
+                    <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITERIMA"
+                        class="btn btn-success btn-block">
+                        <i class="fa fa-check"></i>Set Diterima
+                    </a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ route('permohonan.status', $permohonan->id) }}?status=PROSES"
+                            class="btn btn-warning btn-block">
+                            <i class="fa fa-spinner"></i>Set Proses
+                        </a>
+                    </div>
+                    @elseif($permohonan->status == 'DITERIMA')
                     </div>
                     <div class="mt-2">
                         <a href="{{ route('permohonan.status', $permohonan->id) }}?status=DITOLAK"
@@ -50,6 +82,9 @@
                             <i class="fa fa-spinner"></i>Set Proses
                         </a>
                     </div>
+                    @else
+                        Tidak terdeteksi
+                    @endif
                 </div>
             </div>
 
@@ -121,6 +156,24 @@
                             <div class="col-lg-12">
                                 <label class="form-control">{{ $permohonan->no_telp_termohon }}</label>
                             </div>
+
+                            <label class="col-lg-12 control-label mt-2 py-1">Provinsi</label>
+                            <div class="col-lg-12">
+                                <label class="form-control">{{ $permohonan->provinsi_termohon }}</label>
+                            </div>
+                            <label class="col-lg-12 control-label mt-2 py-1">Kabupaten/Kota</label>
+                            <div class="col-lg-12">
+                                <label class="form-control">{{ $permohonan->kota_termohon }}</label>
+                            </div>
+                            <label class="col-lg-12 control-label mt-2 py-1">Kecamatan</label>
+                            <div class="col-lg-12">
+                                <label class="form-control">{{ $permohonan->kecamatan_termohon }}</label>
+                            </div>
+                            <label class="col-lg-12 control-label mt-2 py-1">Kelurahan</label>
+                            <div class="col-lg-12">
+                                <label class="form-control">{{ $permohonan->kelurahan_termohon }}</label>
+                            </div>
+
                             <label class="col-lg-12 control-label mt-2 py-1">Alamat</label>
                             <div class="col-lg-12">
                                 <label class="form-control">{{ $permohonan->alamat_termohon }}</label>

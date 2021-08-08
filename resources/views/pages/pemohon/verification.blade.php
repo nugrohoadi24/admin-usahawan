@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="box-title">Verifikasi Laporan</h4>
+                        <h4 class="box-title">Verifikasi Permohonan</h4>
                     </div>
                     <div class="card-body--">
                         <div class="table-stats order-table ov-h">
@@ -14,9 +14,9 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Pelapor</th>
-                                        <th>Tanggal Laporan</th>
-                                        <th>Nama Terlapor</th>
+                                        <th>Nama Pemohon</th>
+                                        <th>Tanggal Permohonan</th>
+                                        <th>Nama Termohon</th>
                                         <th>Kasus</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -29,10 +29,10 @@
                                     @forelse ($items as $item)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $item->nama_pelapor }}</td>
+                                        <td>{{ $item->nama_pemohon }}</td>
                                         <td>{{ $item->created_at }}</td>
-                                        <td>{{ $item->nama_terlapor }}</td>
-                                        <td>{{ $item->kasus }}</td>
+                                        <td>{{ $item->nama_termohon }}</td>
+                                        <td>{{ $item->kepentingan }}</td>
                                         <td>
                                             @if($item->status == 'PROSES')
                                               <span class="badge bg-warning text-dark">
@@ -47,10 +47,10 @@
                                             </span>
                                         </td>
                                         <td>
-                                        <a href="{{ route('laporan.detail', $item->id) }}" class="btn btn-success btn-sm">
+                                        <a href="{{ route('permohonan.detail', $item->id) }}" class="btn btn-success btn-sm">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <form action="{{ route('laporan.destroy', $item->id) }}" method="post" class="d-inline">
+                                        <form action="{{ route('permohonan.destroy', $item->id) }}" method="post" class="d-inline">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger btn-sm">

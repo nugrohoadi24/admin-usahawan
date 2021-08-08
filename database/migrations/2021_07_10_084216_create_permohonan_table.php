@@ -29,6 +29,10 @@ class CreatePermohonanTable extends Migration
             $table->string('nama_termohon');
             $table->string('jenis_kelamin_termohon');
             $table->string('no_telp_termohon');
+            $table->string('provinsi_termohon');
+            $table->string('kota_termohon');
+            $table->string('kecamatan_termohon')->nullable();
+            $table->string('kelurahan_termohon')->nullable();
             $table->longText('alamat_termohon');
             $table->string('kategori');
             $table->string('status');
