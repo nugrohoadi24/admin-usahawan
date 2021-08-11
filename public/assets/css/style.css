@@ -885,7 +885,8 @@ aside.left-panel {
 .right-panel .navbar-brand {
   line-height: 42px; }
   .right-panel .navbar-brand img {
-    max-width: 145px; }
+    max-width: 145px;
+    max-height: 35px; }
   .right-panel .navbar-brand.hidden {
     display: none; }
 
@@ -2604,6 +2605,11 @@ footer.site-footer {
   display: block;
   width: 80%;
   max-width: 700px;
+}
+
+.fix-dropdown {
+  margin-top: 5px !important;
+  height: 35px !important;
 }
 
 
