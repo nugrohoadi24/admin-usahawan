@@ -2506,6 +2506,10 @@ footer.site-footer {
 
 /*# sourceMappingURL=style.css.map */
 
+.fix-left {
+  margin-left: 23px !important;
+}
+
 .frame-main img{
   width: 280px !important;
   height: 280px !important;

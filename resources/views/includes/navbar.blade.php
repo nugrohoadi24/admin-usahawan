@@ -17,6 +17,12 @@
                     </a>
                   
                     <ul class="dropdown-menu mt-5" aria-labelledby="dropdownMenuLink">
+                        <div class="fix-left">
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-10 text-sm text-gray-700 underline">Daftar Baru</a>
+                        @endif
+                        </div>
+                        
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
     
