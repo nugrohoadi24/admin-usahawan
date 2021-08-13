@@ -162,11 +162,11 @@ class PelaporController extends Controller
         // $items = Laporan::findOrFail($id);
         // dd(config('mail'));
         $details = [
-            'title' => 'Mail from nugrohoadi.pratomo99@gmail.com',
+            'title' => 'Mail from info@pasarkitasemua.org',
             'body' => 'This is for testing email using smtp'
         ];
        
-        Mail::to('nugrohoadi.pratomo24@gmail.com')->send(new \App\Mail\MyTestMail($details));
+        \Mail::to('nugrohoadi.pratomo24@gmail.com')->send(new \App\Mail\MyTestMail($details));
        
         dd("Email is Sent.");
     }

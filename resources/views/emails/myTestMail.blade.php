@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>nugrohoadi.pratomo99@gmail.com</title>
+    <title>info@pasarkitasemua.org</title>
 </head>
 <body>
     <h1>{{ $details['title'] }}</h1>
