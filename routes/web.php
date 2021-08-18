@@ -51,5 +51,8 @@ Route::get('laporan/download_primary/{id}', 'App\Http\Controllers\PelaporControl
 Route::get('laporan/download_secondary/{id}', 'App\Http\Controllers\PelaporController@download_secondary')
     ->name('laporan.download_secondary');
 
-Route::post('send-mail', 'App\Http\Controllers\PelaporController@sendEmail')
+Route::post('send-mail-laporan', 'App\Http\Controllers\PelaporController@sendEmail')
     ->name('laporan.sendEmail');
+
+Route::post('send-mail-permohonan', 'App\Http\Controllers\PemohonController@sendEmail')
+    ->name('permohonan.sendEmail');

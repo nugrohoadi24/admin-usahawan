@@ -31,10 +31,6 @@
 
                     <div class="mt-2">
                     @if($laporan->status == 'DITERIMA')
-                    {{-- <a href="{{ route('send.verifikasi') }}"
-                        class="btn btn-primary btn-block">
-                        <i class="fa fa-check"></i>Verifikasi
-                    </a> --}}
                     <a href="#mymodal"
                         data-bs-toggle="modal"
                         data-bs-target="#mymodal"
@@ -295,14 +291,9 @@
 <script>
 var mymodal = document.getElementById('mymodal')
 mymodal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
   var button = event.relatedTarget
-  // Extract info from data-bs-* attributes
+
   var recipient = button.getAttribute('data-bs-whatever')
-  // If necessary, you could initiate an AJAX request here
-  // and then do the updating in a callback.
-  //
-  // Update the modal's content.
   var modalTitle = mymodal.querySelector('.modal-title')
   var modalBodyInput = mymodal.querySelector('.modal-body input')
 
@@ -318,7 +309,7 @@ mymodal.addEventListener('show.bs.modal', function (event) {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Kirim Verifikasi Email: {{ $laporan->email_pelapor }}</h5>
-      </div>
+    </div>
       <form action="{{ route('laporan.sendEmail') }}" method="POST">
         <div class="modal-body">
             @csrf

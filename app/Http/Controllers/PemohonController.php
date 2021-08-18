@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PemohonController extends Controller
 {
@@ -128,6 +129,23 @@ class PemohonController extends Controller
         $permohonan->status = $request->status;
 
         $permohonan->save();
+
+        return redirect()->route('permohonan.index');
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $sendMail = [
+            'id' => $request->id,
+            'email_pemohon' => $request->email_pemohon,
+            'judul' => $request->judul,
+            'pesan' => $request->pesan,
+        ];
+
+        Mail::raw($request->pesan, function($mail) use($request) {
+            $mail->to($request->email_pemohon)
+            ->subject($request->judul);
+        });
 
         return redirect()->route('permohonan.index');
     }

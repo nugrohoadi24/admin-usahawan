@@ -28,6 +28,17 @@
                     @endif
                         {{ $permohonan->status }}
                     </span>
+
+                    <div class="mt-2">
+                        @if($permohonan->status == 'DITERIMA')
+                        <a href="#mymodal"
+                            data-bs-toggle="modal"
+                            data-bs-target="#mymodal"
+                            class="btn btn-primary btn-block">
+                            <i class="fa fa-check"></i>Verifikasi
+                        </a>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="card card-default hidden-xs hidden-sm">
@@ -218,5 +229,54 @@
     close_ktp.onclick = function() { 
       ktp.style.display = "none";
     }
+</script>
+
+<script>
+    var mymodal = document.getElementById('mymodal')
+    mymodal.addEventListener('show.bs.modal', function (event) {
+      var button = event.relatedTarget
+    
+      var recipient = button.getAttribute('data-bs-whatever')
+      var modalTitle = mymodal.querySelector('.modal-title')
+      var modalBodyInput = mymodal.querySelector('.modal-body input')
+    
+      modalTitle.textContent = 'New message to ' + recipient
+      modalBodyInput.value = recipient
+    })
     </script>
-    @endsection
+@endsection
+
+@section('modal')
+<div class="modal fade" id="mymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog width-100">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Kirim Verifikasi Email: {{ $permohonan->email_pemohon }}</h5>
+      </div>
+      <form action="{{ route('permohonan.sendEmail') }}" method="POST">
+        <div class="modal-body">
+            @csrf
+            <div class="mb-3">
+                <input type="hidden" name="id" class="form-control" id="recipient-name" value="{{ $permohonan->id }}" required>
+            </div>
+            <div class="mb-3">
+                <input type="hidden" name="email_pemohon" class="form-control" id="recipient-name" value="{{ $permohonan->email_pemohon }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Judul:</label>
+                <input type="text" name="judul" class="form-control" id="recipient-name" required>
+            </div>
+            <div class="mb-3">
+                <label for="message-text" class="col-form-label">Pesan Verifikasi:</label>
+                <textarea name="pesan" class="form-control" id="message-text" required ></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Kirim Verifikasi</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+@endsection
