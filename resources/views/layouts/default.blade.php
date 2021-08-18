@@ -38,5 +38,6 @@
     @include('includes.script')
     @stack('after-style')
     @yield('script')
+    @yield('modal')
 </body>
 </html>

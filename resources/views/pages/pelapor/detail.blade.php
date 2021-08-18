@@ -28,6 +28,21 @@
                     @endif
                         {{ $laporan->status }}
                     </span>
+
+                    <div class="mt-2">
+                    @if($laporan->status == 'DITERIMA')
+                    {{-- <a href="{{ route('send.verifikasi') }}"
+                        class="btn btn-primary btn-block">
+                        <i class="fa fa-check"></i>Verifikasi
+                    </a> --}}
+                    <a href="#mymodal"
+                        data-bs-toggle="modal"
+                        data-bs-target="#mymodal"
+                        class="btn btn-primary btn-block">
+                        <i class="fa fa-check"></i>Verifikasi
+                    </a>
+                    @endif
+                    </div>
                 </div>
             </div>
             <div class="card card-default hidden-xs hidden-sm">
@@ -82,8 +97,10 @@
                         <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/zip.png') }}" alt="">
                     @elseif($secondary_document == 'jpg')
                         <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/jpg.png') }}" alt="">
+                    @elseif($secondary_document == 'png')
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/png.png') }}" alt="">
                     @else
-                        Data Tidak Ada
+                        <img class="center-block img-responsive img-thumbnail frame-document" src="{{ asset('assets/image/txt.png') }}" alt="">
                     @endif
                     <a href="{{ route('laporan.download_secondary', $laporan->id) }}">
                         <button type="button" class="btn btn-primary mt-3">Download File</button>
@@ -273,5 +290,59 @@
     close_ktp.onclick = function() { 
       ktp.style.display = "none";
     }
-    </script>
-    @endsection
+</script>
+
+<script>
+var mymodal = document.getElementById('mymodal')
+mymodal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-whatever')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = mymodal.querySelector('.modal-title')
+  var modalBodyInput = mymodal.querySelector('.modal-body input')
+
+  modalTitle.textContent = 'New message to ' + recipient
+  modalBodyInput.value = recipient
+})
+</script>
+@endsection
+
+@section('modal')
+<div class="modal fade" id="mymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog width-100">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Kirim Verifikasi Email: {{ $laporan->email_pelapor }}</h5>
+      </div>
+      <form action="{{ route('laporan.sendEmail') }}" method="POST">
+        <div class="modal-body">
+            @csrf
+            <div class="mb-3">
+                <input type="hidden" name="id" class="form-control" id="recipient-name" value="{{ $laporan->id }}" required>
+            </div>
+            <div class="mb-3">
+                <input type="hidden" name="email_pelapor" class="form-control" id="recipient-name" value="{{ $laporan->email_pelapor }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Judul:</label>
+                <input type="text" name="judul" class="form-control" id="recipient-name" required>
+            </div>
+            <div class="mb-3">
+                <label for="message-text" class="col-form-label">Pesan Verifikasi:</label>
+                <textarea name="pesan" class="form-control" id="message-text" required ></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Kirim Verifikasi</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+@endsection

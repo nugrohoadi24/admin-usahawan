@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MyTestMail;
 use App\Models\Laporan;
 use finfo;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -63,7 +65,12 @@ class PelaporController extends Controller
      */
     public function show($id)
     {
-        //
+        die();
+        $item = Laporan::findOrFail($id);
+        
+        return view('pages.pelapor.email')->with([
+            'item' => $item
+        ]);
     }
 
     /**
@@ -157,17 +164,20 @@ class PelaporController extends Controller
         return redirect()->route('laporan.index');
     }
 
-    public function sendEmail()
+    public function sendEmail(Request $request)
     {
-        // $items = Laporan::findOrFail($id);
-        // dd(config('mail'));
-        $details = [
-            'title' => 'Mail from info@pasarkitasemua.org',
-            'body' => 'This is for testing email using smtp'
+        $sendMail = [
+            'id' => $request->id,
+            'email_pelapor' => $request->email_pelapor,
+            'judul' => $request->judul,
+            'pesan' => $request->pesan,
         ];
-       
-        \Mail::to('nugrohoadi.pratomo24@gmail.com')->send(new \App\Mail\MyTestMail($details));
-       
-        dd("Email is Sent.");
+
+        Mail::raw($request->pesan, function($mail) use($request) {
+            $mail->to($request->email_pelapor)
+            ->subject($request->judul);
+        });
+
+        return redirect()->route('laporan.index');
     }
 }

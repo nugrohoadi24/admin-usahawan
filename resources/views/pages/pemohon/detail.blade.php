@@ -32,7 +32,7 @@
             </div>
             <div class="card card-default hidden-xs hidden-sm">
                 <div class="card-body text-center">
-                    <h4 class="py-3">KTP Pelapor</h4>
+                    <h4 class="py-3">KTP Pemohon</h4>
                     <img class="center-block img-responsive img-thumbnail frame-photo" src="{{ url($permohonan->ktp_pemohon) }}" alt="foto_ktp" id="myKtp">
                     <div id="show_ktp" class="show_ktp">
                         <img class="modal-content" id="imgKtp">
