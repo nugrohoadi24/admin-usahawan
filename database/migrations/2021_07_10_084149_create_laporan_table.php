@@ -18,6 +18,10 @@ class CreateLaporanTable extends Migration
             $table->string('nama_pelapor');
             $table->string('jenis_kelamin_pelapor');
             $table->date('tanggal_lahir_pelapor');
+            $table->string('provinsi_pelapor');
+            $table->string('kota_pelapor');
+            $table->string('kecamatan_pelapor');
+            $table->string('kelurahan_pelapor');
             $table->longText('alamat_pelapor');
             $table->string('no_telp_pelapor');
             $table->string('email_pelapor');
@@ -31,6 +35,10 @@ class CreateLaporanTable extends Migration
             $table->string('nama_terlapor');
             $table->string('jenis_kelamin_terlapor');
             $table->string('no_telp_terlapor');
+            $table->string('provinsi_terlapor');
+            $table->string('kota_terlapor');
+            $table->string('kecamatan_terlapor')->nullable();
+            $table->string('kelurahan_terlapor')->nullable();
             $table->longText('alamat_terlapor');
             $table->string('email_terlapor')->nullable();
             $table->string('nama_dpd_terlapor')->nullable();

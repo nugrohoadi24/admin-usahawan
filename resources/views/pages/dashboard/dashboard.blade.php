@@ -121,7 +121,22 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card br-0">
+                    <div class="card-body">
+                        <div class="chart-container ov-h">
+                            <div class="mb-3">
+                                <h4 class="box-title">Report Laporan Per-Wilayah</h4>
+                            </div>
+                            <div id="chartdiv">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="orders">
@@ -203,8 +218,116 @@
                     </div>
                 </div>
             </div> 
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card br-0">
+                        <div class="card-body">
+                            <div class="chart-container ov-h">
+                                <div class="mb-3">
+                                    <h4 class="box-title">Report Permohonan Per-Wilayah</h4>
+                                </div>
+                                <div id="chartdiv2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('wilayah')
+<script>
+    am4core.ready(function() {
+
+    am4core.useTheme(am4themes_animated);
+
+    var chart = am4core.create("chartdiv", am4charts.XYChart);
+    chart.padding(40, 40, 40, 40);
+
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.dataFields.category = "name";
+    categoryAxis.renderer.minGridDistance = 1;
+    categoryAxis.renderer.inversed = true;
+    categoryAxis.renderer.grid.template.disabled = true;
+
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    valueAxis.min = 0;
+
+    var series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.categoryY = "name";
+    series.dataFields.valueX = "total";
+    series.tooltipText = "{valueX.value}"
+    series.columns.template.strokeOpacity = 0;
+    series.columns.template.column.cornerRadiusBottomRight = 5;
+    series.columns.template.column.cornerRadiusTopRight = 5;
+
+    var labelBullet = series.bullets.push(new am4charts.LabelBullet())
+    labelBullet.label.horizontalCenter = "left";
+    labelBullet.label.dx = 10;
+    labelBullet.label.text = "{values.valueX.workingValue.formatNumber('#')}";
+    labelBullet.locationX = 1;
+
+    series.columns.template.adapter.add("fill", function(fill, target){
+    return chart.colors.getIndex(target.dataItem.index);
+    });
+
+    var chart_laporan = @json($chart_laporan);
+
+    categoryAxis.sortBySeries = series;
+    chart.data = chart_laporan;
+    
+});
+
+</script>
+
+<script>
+    am4core.ready(function() {
+
+    am4core.useTheme(am4themes_animated);
+
+    var chart = am4core.create("chartdiv2", am4charts.XYChart);
+    chart.padding(40, 40, 40, 40);
+
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.dataFields.category = "name";
+    categoryAxis.renderer.minGridDistance = 1;
+    categoryAxis.renderer.inversed = true;
+    categoryAxis.renderer.grid.template.disabled = true;
+
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    valueAxis.min = 0;
+
+    var series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.categoryY = "name";
+    series.dataFields.valueX = "total";
+    series.tooltipText = "{valueX.value}"
+    series.columns.template.strokeOpacity = 0;
+    series.columns.template.column.cornerRadiusBottomRight = 5;
+    series.columns.template.column.cornerRadiusTopRight = 5;
+
+    var labelBullet = series.bullets.push(new am4charts.LabelBullet())
+    labelBullet.label.horizontalCenter = "left";
+    labelBullet.label.dx = 10;
+    labelBullet.label.text = "{values.valueX.workingValue.formatNumber('#')}";
+    labelBullet.locationX = 1;
+
+    series.columns.template.adapter.add("fill", function(fill, target){
+    return chart.colors.getIndex(target.dataItem.index);
+    });
+
+    var chart_permohonan = @json($chart_permohonan);
+
+    categoryAxis.sortBySeries = series;
+    chart.data = chart_permohonan;
+    
+});
+
+</script>
 
 @endsection

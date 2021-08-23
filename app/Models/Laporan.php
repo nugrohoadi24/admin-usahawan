@@ -17,6 +17,10 @@ class Laporan extends Model
         'nama_pelapor',
         'jenis_kelamin_pelapor',
         'tanggal_lahir_pelapor',
+        'provinsi_pelapor',
+        'kota_pelapor',
+        'kecamatan_pelapor',
+        'kelurahan_pelapor',
         'alamat_pelapor',
         'no_telp_pelapor',
         'email_pelapor',
@@ -30,6 +34,10 @@ class Laporan extends Model
         'nama_terlapor',
         'jenis_kelamin_terlapor',
         'no_telp_terlapor',
+        'provinsi_terlapor',
+        'kota_terlapor',
+        'kecamatan_terlapor',
+        'kelurahan_terlapor',
         'alamat_terlapor',
         'email_terlapor',
         'nama_dpd_terlapor',
@@ -59,4 +67,9 @@ class Laporan extends Model
     public function getSecondaryDocumentAttribute() {
         return url('storage/'. $this->attributes['secondary_document']);
     }
+    public function wilayah()
+    {
+        return $this->belongsTo(RegProvinces::class,'provinsi_pelapor');
+    }
+
 }

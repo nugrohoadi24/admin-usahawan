@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\LaporanController;
 use App\Http\Controllers\API\PermohonanController;
+use App\Http\Controllers\API\WilayahController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('laporan', [LaporanController::class, 'laporan']);
 Route::post('permohonan', [PermohonanController::class, 'permohonan']);
+Route::get('provinsi', [WilayahController::class, 'provinsi']);
+Route::get('kabkota', [WilayahController::class, 'kabkota']);
+Route::get('kecamatan', [WilayahController::class, 'kecamatan']);
+Route::get('kelurahan', [WilayahController::class, 'kelurahan']);
 

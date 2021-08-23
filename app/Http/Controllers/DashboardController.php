@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use App\Models\Permohonan;
+use App\Models\RegProvinces;
+use Dotenv\Parser\Value;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -28,6 +30,23 @@ class DashboardController extends Controller
         $laporan_item = Laporan::orderBy('id', 'DESC')->take(5)->get();
         $permohonan_item = Permohonan::orderBy('id', 'DESC')->take(5)->get();
 
+        $provinsi = RegProvinces::all();
+
+        $chart_laporan = [];
+        $chart_permohonan = [];
+
+        foreach ($provinsi as $prov) {
+            $chart_laporan[] = [
+                'name' => $prov->name,
+                'total'=> Laporan::select('provinsi_pelapor')->where('provinsi_pelapor', $prov->id)->count()
+            ];
+            
+            $chart_permohonan[] = [
+                'name' => $prov->name,
+                'total'=> Permohonan::select('provinsi_pemohon')->where('provinsi_pemohon', $prov->id)->count()
+            ];
+        }
+
         return view('pages.dashboard.dashboard')->with([
             'laporan' => $laporan,
             'permohonan' => $permohonan,
@@ -41,6 +60,9 @@ class DashboardController extends Controller
             'permohonan_success' => $permohonan_success,
             'permohonan_process' => $permohonan_process,
             'permohonan_failed' => $permohonan_failed,
+
+            'chart_laporan' => $chart_laporan,
+            'chart_permohonan' => $chart_permohonan,
         ]);
     }
 }

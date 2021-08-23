@@ -39,5 +39,6 @@
     @stack('after-style')
     @yield('script')
     @yield('modal')
+    @yield('wilayah')
 </body>
 </html>

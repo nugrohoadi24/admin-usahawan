@@ -2620,7 +2620,6 @@ footer.site-footer {
   height: 35px !important;
 }
 
-
 #caption {
   margin: auto;
   display: block;
@@ -2633,6 +2632,15 @@ footer.site-footer {
   height: 150px;
 }
 
+#chartdiv {
+  width: 100%;
+  height: 1000px;
+}
+
+#chartdiv2 {
+  width: 100%;
+  height: 1000px;
+}
 
 .modal-content, #caption {  
   -webkit-animation-name: zoom;

@@ -17,6 +17,10 @@ class Permohonan extends Model
         'nama_pemohon',
         'jenis_kelamin_pemohon',
         'tanggal_lahir_pemohon',
+        'provinsi_pemohon',
+        'kota_pemohon',
+        'kecamatan_pemohon',
+        'kelurahan_pemohon',
         'alamat_pemohon',
         'no_telp_pemohon',
         'email_pemohon',
@@ -44,5 +48,9 @@ class Permohonan extends Model
     }
     public function getKtpPemohonAttribute() {
         return url('storage/'. $this->attributes['ktp_pemohon']);
+    }    
+    public function wilayah()
+    {
+        return $this->belongsTo(RegProvinces::class,'provinsi_pemohon');
     }
 }
